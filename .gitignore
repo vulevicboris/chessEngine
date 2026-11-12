@@ -1,0 +1,20 @@
+
+# CMake build folders
+cmake-build-*/
+build/
+out/
+
+# Compiled files
+*.exe
+*.o
+*.obj
+*.dll
+
+# CLion temporary files
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/shelf/
+
+# Temporary files
+*.log
+*.tmp
