@@ -1,78 +1,54 @@
 #include <iostream>
 #include <string>
+#include "board.h"
+#include "moveVali.h"
 
-void pomeriFiguru(char tabla[8][8], int pred, int pkolona, int kred, int kkolona) {
-    tabla[kred][kkolona] = tabla[pred][pkolona];
-    tabla[pred][pkolona] = '.';
-}
-
-void postaviFigure(char tabla[8][8]) {
-    for (int i = 0; i < 8; i++) { //punjenje table
-        for (int j = 0; j < 8; j++) {
-            tabla[i][j] = '.';
-        }
-    }
-    //beli pesaci
-    for (int j = 0; j < 8; j++) {
-        tabla[6][j] = 'P';
-    }
-    //crni pesaci
-    for (int j = 0; j < 8; j++) {
-        tabla[1][j] = 'p';
-    }
-    //beli topovi
-    tabla[7][0] = 'R';
-    tabla[7][7] = 'R';
-    //crni topovi
-    tabla[0][0] = 'r';
-    tabla[0][7] = 'r';
-    //beli konji
-    tabla[7][1] = 'N';
-    tabla[7][6] = 'N';
-    //crni konji
-    tabla[0][1] = 'n';
-    tabla[0][6] = 'n';
-    //beli lovci
-    tabla[7][2] = 'B';
-    tabla[7][5] = 'B';
-    //crni lovci
-    tabla[0][2] = 'b';
-    tabla[0][5] = 'b';
-    //beli kralj i kraljica
-    tabla[7][3] = 'Q';
-    tabla[7][4] = 'K';
-    //crni kralj i kraljica
-    tabla[0][3] = 'q';
-    tabla[0][4] = 'k';
-}
-
-void ispisTable(char tabla[8][8]) {
-    for (int i = 0; i < 8; i++) { //ispis table
-        for (int j = 0; j < 8; j++) {
-            std::cout << tabla[i][j];
-        }
-        std::cout << std::endl;
-    }
-}
 
 int main() {
 
     char tabla[8][8];
+    bool potez = true;
 
     postaviFigure(tabla);
 
+
     std::string pomeri; //potez koji igrac igra
-    std::cout << "Unesite potez: " << std::endl;
-    std::cin >> pomeri;
+    while (pomeri != "exit") {
+        std::cout << "Unesite potez: " << std::endl;
+        std::cin >> pomeri;
+if (pomeri == "exit") {
+    break;
+}
+        if (pomeri.length() != 4) { //potez veci od 4
+            std::cout << "Neispravan potez" << std::endl;
+            continue;
+        }
+        if (pomeri[0] < 'a' || pomeri[0] > 'h' || pomeri[1] < '1' || pomeri[1] > '8' || pomeri[2] < 'a' || pomeri[2] > 'h' || pomeri[3] < '1' || pomeri[3] > '8') {
+            std::cout << "Neispravan potez" << std::endl;
+            continue; //provera da li pozicija postoji na tabli
+        }
 
-    int pkolona = pomeri[0] - 'a';
-    int pred = 8-(pomeri[1] - '0');
-    int kkolona = pomeri[2] - 'a';
-    int kred = 8-(pomeri[3] - '0');
+        int pkolona = pomeri[0] - 'a';
+        int pred = 8-(pomeri[1] - '0');
+        int kkolona = pomeri[2] - 'a';
+        int kred = 8-(pomeri[3] - '0');
 
-pomeriFiguru(tabla, pred, pkolona, kkolona, kred);
-ispisTable(tabla);
-
+        if (postojiFigura(tabla, pred, pkolona) == false) {
+            std::cout << "Neispravan potez" << std::endl;
+            continue;
+        }
+        if (istaBoja(tabla, pred, pkolona, kred, kkolona) == true) {
+            std::cout << "Neispravan potez" << std::endl;
+            continue;
+        }
+        if (ispravanIgrac(tabla, pred, pkolona, potez) == false) {
+            std::cout << "Neispravan potez" << std::endl;
+            continue;
+        }
+        pomeriFiguru(tabla, pred, pkolona, kred, kkolona);
+        potez = !potez;
+        ispisTable(tabla);
+    }
 
     return 0;
 }
