@@ -45,8 +45,59 @@ if (pomeri == "exit") {
             std::cout << "Neispravan potez" << std::endl;
             continue;
         }
+        if (tabla[pred][pkolona] == 'P' || tabla[pred][pkolona] == 'p') {
+            if (ispravanPotezP(tabla, pred, pkolona, kred, kkolona) == false) {
+                std::cout << "Neispravan potez" << std::endl;
+                continue;
+            }
+        }
+        if (tabla[pred][pkolona] == 'N' || tabla[pred][pkolona] == 'n') {
+            if (ispravanPotezN(tabla, pred, pkolona, kred, kkolona) == false) {
+                std::cout << "Neispravan potez" << std::endl;
+                continue;
+            }
+        }
+        if (tabla[pred][pkolona] == 'R' || tabla[pred][pkolona] == 'r') {
+            if (ispravanPotezR(tabla, pred, pkolona, kred, kkolona) == false) {
+                std::cout << "Neispravan potez" << std::endl;
+                continue;
+            }
+        }
+        if (tabla[pred][pkolona] == 'B' || tabla[pred][pkolona] == 'b') {
+            if (ispravanPotezB(tabla, pred, pkolona, kred, kkolona) == false) {
+                std::cout << "Neispravan potez" << std::endl;
+                continue;
+            }
+        }
+        if (tabla[pred][pkolona] == 'Q' || tabla[pred][pkolona] == 'q') {
+            if (ispravanPotezQ(tabla, pred, pkolona, kred, kkolona) == false) {
+                std::cout << "Neispravan potez" << std::endl;
+                continue;
+            }
+        }
+        if (tabla[pred][pkolona] == 'K' || tabla[pred][pkolona] == 'k') {
+            if (ispravanPotezK(tabla, pred, pkolona, kred, kkolona) == false) {
+                std::cout << "Neispravan potez" << std::endl;
+                continue;
+            }
+        }
+        char staraFigura = tabla[pred][pkolona];
+        char novaFigura = tabla[kred][kkolona];
+        if (tabla[kred][kkolona] == 'k' || tabla[kred][kkolona] == 'K') {
+            std::cout << "Neispravan potez" << std::endl;
+            continue;
+        }
         pomeriFiguru(tabla, pred, pkolona, kred, kkolona);
+            if (jeSah(tabla, potez) == true) {
+                std::cout << "Neispravan potez" << std::endl;
+                tabla[pred][pkolona] = staraFigura;
+                tabla[kred][kkolona] = novaFigura;
+                continue;
+            }
         potez = !potez;
+        if (jeSah(tabla, potez)) {
+            std::cout << "SAH" << std::endl;
+        }
         ispisTable(tabla);
     }
 
